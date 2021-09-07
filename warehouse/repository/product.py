@@ -2,11 +2,12 @@ from sqlmodel import Session, select
 from warehouse import engine
 from warehouse.model import Product
 from warehouse.utils import update_model
+import sys
 
 
-def get_all():
+def get_all(limit: int = sys.maxsize, offset: int = 1):
     with Session(engine) as session:
-        statement = select(Product)
+        statement = select(Product).limit(limit).offset(offset)
         results = session.exec(statement)
         products = results.fetchall()
         return products

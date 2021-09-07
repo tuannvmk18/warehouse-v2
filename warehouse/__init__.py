@@ -1,5 +1,5 @@
 from flask import Flask
-from sqlmodel import create_engine, SQLModel
+from sqlmodel import create_engine
 from .model import *
 from dotenv import load_dotenv
 

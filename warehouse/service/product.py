@@ -4,10 +4,19 @@ from warehouse.repository import product as product_repository
 from warehouse.model import Product
 from warehouse.utils import update_model
 
+import sys
 
-def get_all():
-    products = [json.loads(product.json()) for product in product_repository.get_all()]
+
+def get_all(limit: int = sys.maxsize, offset: int = 1):
+    products = [json.loads(product.json()) for product in product_repository.get_all(limit, offset)]
     return products
+
+
+def get_by_id(product_id):
+    product = product_repository.get_by_id(product_id)
+    if product is not None:
+        return json.loads(product.json())
+    return None
 
 
 def create(data):
