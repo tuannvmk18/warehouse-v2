@@ -7,6 +7,17 @@ from warehouse.service import order as order_service
 order = Blueprint('order_route', __name__)
 
 
+@order.get("/")
+def get_all():
+    limit = request.args.get("litmit")
+    offset = request.args.get("offset")
+    data = order_service.get_all(limit, offset)
+    return {
+        "status_code": 200,
+        "data": data
+    }
+
+
 @order.post("/")
 def create():
     order_service.create(request.json)
@@ -15,5 +26,8 @@ def create():
 
 @order.get("/<int:order_id>")
 def get(order_id: int):
-    order_service.get_full(order_id)
-    return "OK"
+    response = order_service.get_full(order_id)
+    return {
+        "status_code": 200,
+        "data": response
+    }

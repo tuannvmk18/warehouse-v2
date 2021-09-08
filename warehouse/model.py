@@ -27,7 +27,7 @@ class Product(SQLModel, table=True):
     name: str
     description: str
     supplier_id: Optional[int] = Field(default=None, foreign_key="supplier.id")
-
+    price: float
     order_links: List[OrderProductLink] = Relationship(back_populates="product")
 
 
