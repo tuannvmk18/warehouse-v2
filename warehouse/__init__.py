@@ -18,11 +18,12 @@ ma = Marshmallow()
 def create_app():
     app = Flask(__name__)
     ma.init_app(app)
-    from .route import product, supplier, order
+    from .route import product, supplier, order, customer
 
     app.register_blueprint(product, url_prefix="/product")
     app.register_blueprint(supplier, url_prefix="/supplier")
     app.register_blueprint(order, url_prefix="/order")
+    app.register_blueprint(customer, url_prefix="/customer")
 
     SQLModel.metadata.create_all(engine)
     return app

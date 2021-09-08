@@ -34,9 +34,10 @@ def delete(customer_id: int):
     with Session(engine) as session:
         statement = select(Customer).where(Customer.id == customer_id)
         customer = session.exec(statement).one_or_none()
-        session.delete(customer)
-        session.commit()
-        return True
+        if customer is not None:
+            session.delete(customer)
+            session.commit()
+            return True
     return False
 
 
