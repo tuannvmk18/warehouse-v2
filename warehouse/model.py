@@ -10,11 +10,16 @@ class OrderProductLink(SQLModel, table=True):
     product_id: Optional[int] = Field(default=None, foreign_key="product.id", primary_key=True)
     amount: int
 
+    order: "Order" = Relationship(back_populates="product_links")
+    product: "Product" = Relationship(back_populates="order_links")
+
 
 class Order(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
     order_date: datetime
-    products: List["Product"] = Relationship(back_populates="orders", link_model=OrderProductLink)
+    customer_id: Optional[int] = Field(default=None, foreign_key="customer.id")
+
+    product_links: List[OrderProductLink] = Relationship(back_populates="order")
 
 
 class Product(SQLModel, table=True):
@@ -22,7 +27,8 @@ class Product(SQLModel, table=True):
     name: str
     description: str
     supplier_id: Optional[int] = Field(default=None, foreign_key="supplier.id")
-    orders: List[Order] = Relationship(back_populates="products", link_model=OrderProductLink)
+
+    order_links: List[OrderProductLink] = Relationship(back_populates="product")
 
 
 class Supplier(SQLModel, table=True):

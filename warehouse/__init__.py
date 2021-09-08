@@ -17,9 +17,11 @@ engine = create_engine(postgresql_url, echo=True)
 def create_app():
     app = Flask(__name__)
 
-    from .route import product
+    from .route import product, supplier, order
 
     app.register_blueprint(product, url_prefix="/product")
+    app.register_blueprint(supplier, url_prefix="/supplier")
+    app.register_blueprint(order, url_prefix="/order")
 
     SQLModel.metadata.create_all(engine)
     return app

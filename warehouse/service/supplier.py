@@ -29,7 +29,7 @@ def create(data):
 
 
 def delete(supplier_id: int):
-    is_delete_success = supplier_repository.delete_by_id(supplier_id)
+    is_delete_success = supplier_repository.delete(supplier_id)
     return is_delete_success
 
 
